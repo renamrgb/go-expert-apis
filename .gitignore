@@ -1,0 +1,67 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Build folders
+bin/
+build/
+dist/
+
+# Go workspace file
+go.work
+
+# Dependency directories (geralmente não versionar)
+vendor/
+
+# Go modules (normalmente versiona go.mod e go.sum)
+go.sum
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage.out
+*.coverprofile
+
+# Temporary files
+tmp/
+temp/
+
+# Test binaries
+*.test
+
+# Profiling
+*.pprof
+
+# Debug
+debug/
+
+# Air (hot reload)
+.air.toml
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Misc
+*.local
