@@ -1,0 +1,39 @@
+POST http://localhost:8000/products
+Content-Type: application/json
+
+{
+    "name": "Product 4",
+    "price": 10.99
+}
+
+###
+
+GET http://localhost:8000/products/ec448905-a606-412a-a272-a3c5b1ae1d80
+Content-Type: application/json
+
+
+###
+PUT http://localhost:8000/products/978b4c24-4455-4c95-af46-94494b29e8d0
+Content-Type: application/json
+
+{
+    "name": "Product 4 Updated",
+    "price": 20.0
+}
+
+###
+PUT http://localhost:8000/products/1
+Content-Type: application/json
+
+{
+    "name": "Product 4 Updated",
+    "price": 12.99
+}
+
+###
+DELETE http://localhost:8000/products/ec448905-a606-412a-a272-a3c5b1ae1d80
+Content-Type: application/json
+
+###
+GET http://localhost:8000/products?page=1&limit=10&sort=asc
+Content-Type: application/json
