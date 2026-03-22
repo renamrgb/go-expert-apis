@@ -11,14 +11,14 @@ import (
 )
 
 func TestNewProductSuccess(t *testing.T) {
-	product, err := NewProduct("Product 1", 100)
+	product, err := NewProduct("Product 1", 100.00)
 
 	require.NoError(t, err)
 	require.NotNil(t, product)
 
 	assert.NotEmpty(t, product.ID.String())
 	assert.Equal(t, "Product 1", product.Name)
-	assert.Equal(t, 100, product.Price)
+	assert.Equal(t, 100.00, product.Price)
 	assert.WithinDuration(t, time.Now(), product.CreatedAt, time.Second)
 }
 
@@ -26,7 +26,7 @@ func TestNewProductErrorScenarios(t *testing.T) {
 	tests := []struct {
 		name        string
 		inputName   string
-		inputPrice  int
+		inputPrice  float64
 		expectedErr error
 	}{
 		{
