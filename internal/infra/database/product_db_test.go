@@ -17,7 +17,7 @@ const idQuery = "id = ?"
 
 func setupDB(t *testing.T) *gorm.DB {
 	t.Helper()
-	db, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open("file:%s?mode=memory&cache=private"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	require.NoError(t, err, "falha ao abrir banco in-memory")

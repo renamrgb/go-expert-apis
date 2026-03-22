@@ -65,3 +65,7 @@ debug/
 
 # Misc
 *.local
+
+memory
+
+test.db
