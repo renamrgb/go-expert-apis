@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Renam Bulhões",
-  "email": "renam@bulhoes.com.br",
+  "email": "renam@bulhoes.com",
   "password": "123456"
 }
 
@@ -14,6 +14,6 @@ POST http://localhost:8000/user/generate_token
 Content-Type: application/json
 
 {
-  "email": "renam@bulhoes.com.br",
+  "email": "renam@bulhoes.com",
   "password": "123456"
 }

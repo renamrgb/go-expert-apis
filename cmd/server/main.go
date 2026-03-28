@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/jwtauth"
 	"github.com/renamrgb/go-expert-apis/configs"
 	"github.com/renamrgb/go-expert-apis/internal/entity"
 	"github.com/renamrgb/go-expert-apis/internal/infra/database"
@@ -35,8 +36,10 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Route("/products", func(r chi.Router) {
+		r.Use(jwtauth.Verifier(conf.TokenAuth))
+		r.Use(jwtauth.Authenticator)
 		r.Post("/", productHandler.CreateProduct)
-		r.Get("/", productHandler.GetProducts)
+		r.Get("/", productHandler.GetAllProducts)
 		r.Get("/{id}", productHandler.GetProducts)
 		r.Put("/{id}", productHandler.UpdateProduct)
 		r.Delete("/{id}", productHandler.DeleteProduct)

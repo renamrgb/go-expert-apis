@@ -1,5 +1,6 @@
 POST http://localhost:8000/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzQ3MjQwNzUsInN1YiI6IjJmZjVlOGZiLWYwYzQtNDM0Mi1hZGIzLTA4OTlmMzRjNjE3MiJ9.ok-yIqDgNQ3UsKgBXTvNMDx-1tD196cmhQ38AtwlwXc
 
 {
     "name": "Product 4",
@@ -35,5 +36,6 @@ DELETE http://localhost:8000/products/ec448905-a606-412a-a272-a3c5b1ae1d80
 Content-Type: application/json
 
 ###
-GET http://localhost:8000/products?page=1&limit=10&sort=asc
+GET http://localhost:8000/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzQ3MjQzOTUsInN1YiI6IjJmZjVlOGZiLWYwYzQtNDM0Mi1hZGIzLTA4OTlmMzRjNjE3MiJ9.9D_gYCF8FkGs8XtveEnt5WpBnrMqeU7dAoFG1pf2YLY
