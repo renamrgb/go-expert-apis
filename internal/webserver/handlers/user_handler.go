@@ -11,6 +11,10 @@ import (
 	"github.com/renamrgb/go-expert-apis/internal/infra/database"
 )
 
+type Error struct {
+	Message string `json:"message"`
+} // @name ErrorResponse
+
 type UserHandler struct {
 	UserDB       database.UserInterface
 	Jwt          *jwtauth.JWTAuth
@@ -21,6 +25,17 @@ func NewUserHandler(userDB database.UserInterface, jwt *jwtauth.JWTAuth, jwtExpi
 	return &UserHandler{UserDB: userDB, Jwt: jwt, JwtExpiresIn: jwtExpiresIn}
 }
 
+// GetJWT godoc
+// @Summary GET a user JWT
+// @Description GET a user JWT
+// @Tags users
+// @Accept json
+// @Produce json
+// @param   request body dto.GetJWTInput true "user credentials"
+// @Success 200 {object} dto.GetJWTOutput
+// @failure 404 {object} Error
+// @failure 500 {object} Error
+// @Router /user/generate_token [post]
 func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 	var input dto.GetJWTInput
 
@@ -31,7 +46,9 @@ func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.UserDB.FindByEmail(input.Email)
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
+		w.WriteHeader(http.StatusNotFound)
+		error := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(error)
 		return
 	}
 
@@ -45,17 +62,23 @@ func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
 		"exp": time.Now().Add(time.Second * time.Duration(h.JwtExpiresIn)).Unix(),
 	})
 
-	accessToken := struct {
-		AccessToken string `json:"access_token"`
-	}{
-		AccessToken: tokenString,
-	}
+	accessToken := dto.GetJWTOutput{AccessToken: tokenString}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(accessToken)
 	w.WriteHeader(http.StatusOK)
 }
 
+// Create User
+// @Summary Create a new user
+// @Description Create a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @param   request body dto.CreateUserInput true "user request"
+// @Success 201
+// @Failure 500 {object} Error
+// @Router /user [post]
 func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var userInput dto.CreateUserInput
 
@@ -67,11 +90,15 @@ func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
 	user, err := entity.NewUser(userInput.Name, userInput.Email, userInput.Password)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		error := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(error)
 		return
 	}
 	err = h.UserDB.Create(user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		error := Error{Message: err.Error()}
+		json.NewEncoder(w).Encode(error)
 		return
 	}
 

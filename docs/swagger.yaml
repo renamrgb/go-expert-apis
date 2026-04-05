@@ -1,0 +1,101 @@
+basePath: /
+definitions:
+  CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  GetJWTRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  GetJWTResponse:
+    properties:
+      access_token:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: renamgustavo@live.com
+    name: Renam Bulhoes
+  description: Product API with JWT Authentication
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Go Expert API Exemple
+  version: "1.0"
+paths:
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: user request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new user
+      tags:
+      - users
+  /user/generate_token:
+    post:
+      consumes:
+      - application/json
+      description: GET a user JWT
+      parameters:
+      - description: user credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/GetJWTRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetJWTResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: GET a user JWT
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
